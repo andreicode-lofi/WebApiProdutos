@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using WebApi.Context;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Model;
 using WebApi.Repositorio.Interface;
 
@@ -10,12 +8,12 @@ namespace WebApi.Controllers
     [ApiController]
     public class ProdutoController : ControllerBase
     {
-        private readonly appContext _context;
+        
         private readonly IProdutosRepository _iprodutoRepository;
 
-        public ProdutoController(appContext context, IProdutosRepository iprodutoRepository)
+        public ProdutoController( IProdutosRepository iprodutoRepository)
         {
-            _context = context;
+            
             _iprodutoRepository = iprodutoRepository;
         }
 
