@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace WebApi.Model
 {
@@ -30,6 +31,8 @@ namespace WebApi.Model
         public DateTime DataCadastro { get; set; }
 
         public int CategoriaId { get; set; }// map chave estrangeira
+
+        [JsonIgnore]//não Serializa essa propriedade no swagger
         public Categoria? Categoria { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 using WebApi.Context;
 using WebApi.Repositorio;
 using WebApi.Repositorio.Interface;
@@ -7,7 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+
+
+//Json - Serialização e desserialização - ignoreCycle acabanco com o ciclo dos objetos produto e categoria
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 //Banco de dados
 builder.Services.AddDbContext<appContext>(options =>
@@ -15,6 +21,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 //Repositorio
 builder.Services.AddTransient<IProdutosRepository, ProdutoRepository>();
+builder.Services.AddTransient<ICategoriasRepository, CategoriasRepository>();
+
+
 
 
 builder.Services.AddEndpointsApiExplorer();
