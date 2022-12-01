@@ -15,6 +15,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 //Repositorio
 builder.Services.AddTransient<IProdutosRepository, ProdutoRepository>();
+builder.Services.AddTransient<ICategoriasRepository, CategoriasRepository>();
 
 
 builder.Services.AddEndpointsApiExplorer();

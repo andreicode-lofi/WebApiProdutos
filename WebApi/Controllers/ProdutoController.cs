@@ -17,7 +17,7 @@ namespace WebApi.Controllers
             _iprodutoRepository = iprodutoRepository;
         }
 
-        [HttpGet] //ActionResult altera o retorno para actionResults, se for precisar
+        [HttpGet]//ActionResult altera o retorno para actionResults, se for precisar
         public ActionResult<IEnumerable<Produto>> Get()//IEnumerable Retorna uma lista /  index
         {
             var produtos = _iprodutoRepository.listaProdutos().ToList();
@@ -56,7 +56,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest();
             }
-            _iprodutoRepository.Atualizar(id,produto);
+            _iprodutoRepository.Atualizar(id, produto);
 
             return Ok(produto);
         }
