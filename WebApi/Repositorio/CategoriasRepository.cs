@@ -56,7 +56,7 @@ namespace WebApi.Repositorio
         public IEnumerable<Categoria> ListaCategoriaProduto()
         {
             return _context.Categorias.Include(c => c.Produtos).ToList();
-               
+          
         }
     }
 }
