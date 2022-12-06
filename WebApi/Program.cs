@@ -24,8 +24,6 @@ builder.Services.AddTransient<IProdutosRepository, ProdutoRepository>();
 builder.Services.AddTransient<ICategoriasRepository, CategoriasRepository>();
 
 
-
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
