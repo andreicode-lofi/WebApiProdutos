@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Context;
 using WebApi.Model;
 using WebApi.Repositorio.Interface;
@@ -18,9 +17,9 @@ namespace WebApi.Repositorio
 
         public Categoria Atualizar(int id, Categoria categoria)
         {
-            //Entry() metodo para modificar o estatado do objeto categoria
+            //Entry() metodo para modificar o estatado do objeto 
             _context.Entry(categoria).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.SaveChanges();         // aqui definindo que meu estado vai ser modificado
+            _context.SaveChanges();         // aqui definindo o estado do objeto
             return categoria;
         }
 
@@ -49,13 +48,14 @@ namespace WebApi.Repositorio
         public IEnumerable<Categoria> ListaCategoria()
         {
             return _context.Categorias.Take(10).ToList();
+            //retornando apenas os 10 primeiros registros,
+            //retornar a entidade completa pode causar sobre carga
         }
 
         public IEnumerable<Categoria> ListaCategoriaProduto()
         {
-            return _context.Categorias.Include(c => c.Produtos).Where(c => c.CategoriaId >= 0).ToList();
-            //Nunca retorne objetos relacionados sem aplicar um filtro
-            //pode causas sobre cargas
+            return _context.Categorias.Include(c => c.Produtos).ToList();
+            
         }
     }
 }

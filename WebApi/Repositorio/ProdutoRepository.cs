@@ -32,7 +32,7 @@ namespace WebApi.Repositorio
         {
             //Entry() metodo para modificar o estatado do objeto produto
             _context.Entry(produto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            _context.SaveChanges();         // aqui definindo que meu estado vai ser modificado
+            _context.SaveChanges();         // aqui definindo estado do objeto
             return produto;
         }
 

@@ -15,8 +15,8 @@ namespace WebApi.Controllers
             _iprodutoRepository = iprodutoRepository;
         }
 
-        [HttpGet]//ActionResult altera o retorno para actionResults, se for precisar
-        public ActionResult<IEnumerable<Produto>> Get()//IEnumerable Retorna uma lista /  index
+        [HttpGet]//o retorno  actionResults, se for precisar
+        public ActionResult<IEnumerable<Produto>> Get()
         {
             try
             {

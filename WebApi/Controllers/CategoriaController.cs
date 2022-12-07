@@ -77,8 +77,8 @@ namespace WebApi.Controllers
 
                 _icategoriasRepository.Criar(categoria);
 
-                return new CreatedAtRouteResult("ObterCategoria",//retornando 201 creat, chamo o ObterCategoria
-                     new { id = categoria.CategoriaId }, categoria);//passando o id da categoria, e retorna a categoria que acabei de criar
+                return new CreatedAtRouteResult("ObterCategoria",
+                     new { id = categoria.CategoriaId }, categoria);
             }
             catch (Exception)
             {
