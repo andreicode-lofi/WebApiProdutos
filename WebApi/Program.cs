@@ -10,10 +10,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 
-//Json - Serialização e desserialização - ignoreCycle acabanco com o ciclo dos objetos produto e categoria
-
+//Json - Serialização e desserialização - ignoreCycle acabanco com o ciclo dos objetos relacionados produto e 
 builder.Services.AddControllers().AddJsonOptions(options =>
 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+
+
 
 //Banco de dados
 builder.Services.AddDbContext<appContext>(options =>

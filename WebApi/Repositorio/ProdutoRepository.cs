@@ -20,19 +20,16 @@ namespace WebApi.Repositorio
             if(produto is null)
             {
                 return null;
-
             }
 
             _context.Produtos.Remove(produto);
             _context.SaveChanges();
 
             return produto;
-
         }
 
         public Produto Atualizar(int id, Produto produto)
         {
-
             //Entry() metodo para modificar o estatado do objeto produto
             _context.Entry(produto).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.SaveChanges();         // aqui definindo que meu estado vai ser modificado
@@ -53,7 +50,9 @@ namespace WebApi.Repositorio
 
         public IEnumerable<Produto> listaProdutos()
         {
-            return _context.Produtos.ToList();
+            return _context.Produtos.Take(10).ToList();
+            //retornando apenas os 10 primeiros registros,
+            //retornar a entidade completa pode causar sobre carga
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApi.Model;
 using WebApi.Repositorio.Interface;
 
@@ -22,66 +21,106 @@ namespace WebApi.Controllers
             
         }
 
-
         [HttpGet]
         public ActionResult<IEnumerable<Categoria>> Get()
         {
-            var listaCategoria = _icategoriasRepository.ListaCategoria().ToList();
-
-            if (listaCategoria == null)
+            try
             {
-                return NotFound("Lista não encontrada...");
-            }
+                var listaCategoria = _icategoriasRepository.ListaCategoria().ToList();
 
-            return listaCategoria;
+                if (listaCategoria == null)
+                {
+                    return NotFound("Dados não encontrado...");
+                }
+
+                return listaCategoria;
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest,
+                    "Ocorreu um erro ao tratar a sua solicitação...");
+            }
         }
 
         [HttpGet("{id:int}", Name = "ObterCategoria")]
         public ActionResult<Categoria> Get(int id)
         {
-            var buscarId = _icategoriasRepository.BuscarId(id);
-
-            if (buscarId == null)
+            try
             {
-                return NotFound("Categoria não encontrada...");
-            }
+                var buscarId = _icategoriasRepository.BuscarId(id);
 
-            return buscarId;
+                if (buscarId == null)
+                {
+                    return NotFound($"O id:{id} não existe");
+                }
+
+                return buscarId;
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status400BadRequest,
+                    $"Ocorreu um erro ao tratar a sua solicitação do id {id}...");
+            }
         }
 
         [HttpPost]
         public ActionResult<Categoria> Post(Categoria categoria)
         {
-            if(categoria is null)
+            try
             {
-                return BadRequest();
+                if (categoria is null)
+                {
+                    return BadRequest("Categoria invalida");
+                }
+
+                _icategoriasRepository.Criar(categoria);
+
+                return new CreatedAtRouteResult("ObterCategoria",//retornando 201 creat, chamo o ObterCategoria
+                     new { id = categoria.CategoriaId }, categoria);//passando o id da categoria, e retorna a categoria que acabei de criar
             }
-
-             _icategoriasRepository.Criar(categoria);
-
-            return new CreatedAtRouteResult("ObterCategoria",//retornando 201 creat, chamo o ObterCategoria
-                 new { id = categoria.CategoriaId }, categoria);//passando o id da categoria, e retorna a categoria que acabei de criar
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status410Gone,
+                    "Ocorreu um erro ao criar a categoria...");
+            }
         }
 
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Categoria categoria)
         {
-            if(id != categoria.CategoriaId)
+            try
             {
-                return BadRequest();
+                if (id != categoria.CategoriaId)
+                {
+                    return BadRequest("Atualização de dados invalida");
+                }
+
+                _icategoriasRepository.Atualizar(id, categoria);
+
+                return Ok(categoria);
             }
-
-            _icategoriasRepository.Atualizar(id, categoria);
-
-            return Ok(categoria);
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status304NotModified,
+                    $"Ocorreu um erro ao atualiza a categoria do id:{id}...");
+            }
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult<Categoria> Delete(int id)
         {
-            var produto = _icategoriasRepository.Deletar(id);
-            return Ok(produto);
+            try
+            {
+                var produto = _icategoriasRepository.Deletar(id);
+                return Ok(produto);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status304NotModified,
+                    $"Ocorreu um erro ao deletar a categoria do id{id}...");
+            }
         }
-
     }
 }

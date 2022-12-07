@@ -48,15 +48,14 @@ namespace WebApi.Repositorio
 
         public IEnumerable<Categoria> ListaCategoria()
         {
-            return _context.Categorias.ToList();
-
-          
+            return _context.Categorias.Take(10).ToList();
         }
 
         public IEnumerable<Categoria> ListaCategoriaProduto()
         {
-            return _context.Categorias.Include(c => c.Produtos).ToList();
-          
+            return _context.Categorias.Include(c => c.Produtos).Where(c => c.CategoriaId >= 0).ToList();
+            //Nunca retorne objetos relacionados sem aplicar um filtro
+            //pode causas sobre cargas
         }
     }
 }
